@@ -22,6 +22,7 @@
 #define CONSTANTS_H
 
 #include <string>
+#include <cstdint>
 #include "BinaryGuid.h"
 
 const unsigned int LIVE_CASH = 5; // время жизни кешированных данных в минутах
