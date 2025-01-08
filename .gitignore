@@ -15,3 +15,5 @@ Debug/*
 /build/
 *.cfl
 *.lgd
+
+*.zip
