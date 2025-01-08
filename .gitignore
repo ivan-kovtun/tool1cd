@@ -18,3 +18,5 @@ Debug/*
 
 *.zip
 *.tar.gz
+
+.aws/
