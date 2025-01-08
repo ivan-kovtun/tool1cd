@@ -19,4 +19,4 @@ Debug/*
 *.zip
 *.tar.gz
 
-.aws/
+.aws/*
