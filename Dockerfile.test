@@ -1,0 +1,54 @@
+# Use the official Ubuntu image as the base image
+FROM ubuntu:latest
+
+# Install necessary tools
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    pipx \
+    unzip \
+    cmake \
+    make \
+    g++ \
+    libstdc++-14-dev
+
+# Ensure pipx binaries are in PATH
+ENV PATH="/root/.local/bin:$PATH"
+
+COPY actual_data.zip /root/actual_data.zip
+COPY platform /root/platform
+# COPY deb_8_3_18_1959.tar.gz /root/deb_8_3_18_1959.tar.gz
+# COPY deb64_8_3_18_1959.tar.gz /root/deb64_8_3_18_1959.tar.gz
+# COPY client_8_3_18_1959.deb64.tar.gz /root/client_8_3_18_1959.deb64.tar.gz
+
+# # Unzip the downloaded files
+RUN unzip /root/actual_data.zip -d /root/actual_data
+
+RUN mkdir /root/platform/8_3 \
+     && for file in /root/platform/client*.tar.gz; do tar -xvf "$file" -C /root/platform/8_3; done 
+    #  && for file in /root/platform/deb*.tar.gz; do tar -xvf "$file" -C /root/platform/8_3; done
+     
+# # Install 1C:Enterprise
+# RUN dpkg --add-architecture i386
+# RUN apt-get update
+# RUN apt-get install imagemagick:i386 -y
+# RUN apt-get install unixodbc:i386 -y
+# RUN dpkg -i /root/platform/8_3/*.deb || apt-get install -f -y
+
+# Extract actual data
+# RUN mkdir actual_tables
+# RUN ctool1cd -l /root/ctool1cd_extract.log /root/actual_data/1Cv8.1CD -eb /root/actual_tables "*"
+
+# Build updatated mobile data base
+# RUN ctool1cd -l /root/ctool1cd_build.log /root/template/1Cv8.1CD -ib /root/actual_tables
+
+# Install 1C:Enterprise
+# RUN dpkg -i /root/deb64_8_3_18_1959/*.deb || apt-get install -f -y
+
+# # List files in /opt/1C/v8.3 recursively
+# RUN ls -R /opt/1C/v8.3
+
+# ctool1cd -l /root/ctool1cd.log /root/template/1Cv8.1CD -sts /root/template_files.lst
+
+    # Keep the container running
+    CMD ["tail", "-f", "/dev/null"]
