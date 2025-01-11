@@ -20,3 +20,4 @@ Debug/*
 *.tar.gz
 
 .aws/*
+.env
